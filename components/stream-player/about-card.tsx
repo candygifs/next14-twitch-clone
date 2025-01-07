@@ -2,8 +2,6 @@
 
 import { VerifiedMark } from "@/components/verified-mark";
 import { BioModal } from "./bio-modal";
-import { useState, useEffect } from "react";
-import { db } from "@/lib/db";
 
 interface AboutCardProps {
   hostName: string;
@@ -11,6 +9,7 @@ interface AboutCardProps {
   viewerIdentity: string;
   bio: string | null;
   followedByCount: number;
+  isVerified?: boolean; // Добавляем необязательное поле
 }
 
 export const AboutCard = ({
@@ -19,30 +18,8 @@ export const AboutCard = ({
   viewerIdentity,
   bio,
   followedByCount,
+  isVerified = false, // Значение по умолчанию
 }: AboutCardProps) => {
-  const [isVerified, setIsVerified] = useState(false);
-
-  useEffect(() => {
-    const checkVerification = async () => {
-      try {
-        const user = await db.user.findUnique({
-          where: { id: hostIdentity },
-          select: { 
-            id: true,
-            verified: true 
-          }
-        });
-        
-        setIsVerified(user?.verified || false);
-      } catch (error) {
-        console.error("Verification check failed", error);
-        setIsVerified(false);
-      }
-    };
-
-    checkVerification();
-  }, [hostIdentity]);
-
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
 
