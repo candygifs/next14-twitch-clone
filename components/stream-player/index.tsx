@@ -13,6 +13,7 @@ import { ChatToggle } from "./chat-toggle";
 import { Chat, ChatSkeleton } from "./chat";
 import { Video, VideoSkeleton } from "./video";
 import { Header, HeaderSkeleton } from "./header";
+import { VerifiedMark } from "@/components/verified-mark";
 
 type CustomStream = {
   id: string;
@@ -82,6 +83,7 @@ export const StreamPlayer = ({
             imageUrl={user.imageUrl}
             isFollowing={isFollowing}
             name={stream.name}
+            verifiedMark={<VerifiedMark username={user.username} />} // Добавлено
           />
           <InfoCard
             hostIdentity={user.id}
