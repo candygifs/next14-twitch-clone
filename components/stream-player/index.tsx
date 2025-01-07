@@ -30,7 +30,6 @@ type CustomUser = {
   bio: string | null;
   stream: CustomStream | null;
   imageUrl: string;
-  verified?: boolean; // Добавляем необязательное поле verified
   _count: { followedBy: number }
 };
 
@@ -96,7 +95,6 @@ export const StreamPlayer = ({
             viewerIdentity={identity}
             bio={user.bio}
             followedByCount={user._count.followedBy}
-            isVerified={user.verified} // Добавляем проверку verified
           />
         </div>
         <div

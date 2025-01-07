@@ -1,18 +1,36 @@
 import { Check } from "lucide-react";
+import { db } from "@/lib/db"; // Импорт вашего клиента базы данных
 
-const VERIFIED_USERS = [
-  'hatikoinside',
-  'user_2rGryq0M83Xv24oO53FJ4X4ozCa'
-];
+export const VerifiedMark = async () => {
+  // Список username верифицированных пользователей
+  const verifiedUsernames = [
+    'hatikoinside',
+    'z',
+    // Добавляйте сюда username кого хотите заверифицировать
+  ];
 
-export const VerifiedMark = ({ userId }: { userId: string }) => {
-  if (!VERIFIED_USERS.includes(userId)) {
-    return null;
+  try {
+    // Получаем текущего пользователя (используйте ваш метод получения)
+    const user = await db.user.findFirst({
+      where: { 
+        username: { 
+          in: verifiedUsernames 
+        } 
+      },
+      select: { username: true }
+    });
+
+    // Если пользователь найден в списке - показываем галочку
+    if (user) {
+      return (
+        <div className="p-0.5 flex items-center justify-center h-4 w-4 rounded-full bg-blue-600">
+          <Check className="h-[10px] w-[10px] text-primary stroke-[4px]" />
+        </div>
+      );
+    }
+  } catch (error) {
+    console.error("Verification check error", error);
   }
 
-  return (
-    <div className="p-0.5 flex items-center justify-center h-4 w-4 rounded-full bg-blue-600">
-      <Check className="h-[10px] w-[10px] text-primary stroke-[4px]" />
-    </div>
-  );
-};
+  return null;
+}

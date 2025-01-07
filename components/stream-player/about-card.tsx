@@ -1,6 +1,7 @@
 "use client";
 
 import { VerifiedMark } from "@/components/verified-mark";
+
 import { BioModal } from "./bio-modal";
 
 interface AboutCardProps {
@@ -9,8 +10,7 @@ interface AboutCardProps {
   viewerIdentity: string;
   bio: string | null;
   followedByCount: number;
-  isVerified?: boolean;
-}
+};
 
 export const AboutCard = ({
   hostName,
@@ -18,18 +18,7 @@ export const AboutCard = ({
   viewerIdentity,
   bio,
   followedByCount,
-  isVerified = false,
 }: AboutCardProps) => {
-  // Жестко задаем список верифицированных пользователей
-  const verifiedUsers = [
-    "user_2rGryq0M83Xv24oO53FJ4X4ozCa", 
-    "hatikoinside",
-    "клоун_стримера_id3"
-  ];
-
-  // Проверяем по ID
-  const isReallyVerified = verifiedUsers.includes(hostIdentity);
-
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
 
@@ -41,7 +30,7 @@ export const AboutCard = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-2 font-semibold text-lg lg:text-2xl">
             About {hostName}
-            {isReallyVerified && <VerifiedMark />}
+            <VerifiedMark />
           </div>
           {isHost && (
             <BioModal initialValue={bio} />
