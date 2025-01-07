@@ -3,7 +3,7 @@
 import { VerifiedMark } from "@/components/verified-mark";
 import { BioModal } from "./bio-modal";
 import { useState, useEffect } from "react";
-import { db } from "@/lib/db"; // Импорт вашего клиента базы данных
+import { db } from "@/lib/db";
 
 interface AboutCardProps {
   hostName: string;
@@ -27,12 +27,16 @@ export const AboutCard = ({
       try {
         const user = await db.user.findUnique({
           where: { id: hostIdentity },
-          select: { verified: true }
+          select: { 
+            id: true,
+            verified: true 
+          }
         });
         
         setIsVerified(user?.verified || false);
       } catch (error) {
         console.error("Verification check failed", error);
+        setIsVerified(false);
       }
     };
 
