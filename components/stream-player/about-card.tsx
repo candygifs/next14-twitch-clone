@@ -1,7 +1,6 @@
 "use client";
 
 import { VerifiedMark } from "@/components/verified-mark";
-
 import { BioModal } from "./bio-modal";
 
 interface AboutCardProps {
@@ -10,6 +9,7 @@ interface AboutCardProps {
   viewerIdentity: string;
   bio: string | null;
   followedByCount: number;
+  isVerified: boolean; // Новое свойство
 };
 
 export const AboutCard = ({
@@ -18,6 +18,7 @@ export const AboutCard = ({
   viewerIdentity,
   bio,
   followedByCount,
+  isVerified, // Деструктуризация нового свойства
 }: AboutCardProps) => {
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
@@ -30,7 +31,7 @@ export const AboutCard = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-2 font-semibold text-lg lg:text-2xl">
             About {hostName}
-            <VerifiedMark />
+            {isVerified && <VerifiedMark />} {/* Условный рендеринг верифицированной метки */}
           </div>
           {isHost && (
             <BioModal initialValue={bio} />
