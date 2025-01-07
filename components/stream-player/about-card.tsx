@@ -9,8 +9,8 @@ interface AboutCardProps {
   viewerIdentity: string;
   bio: string | null;
   followedByCount: number;
-  isVerified: boolean; // Новое свойство
-};
+  isVerified?: boolean; // Необязательное свойство
+}
 
 export const AboutCard = ({
   hostName,
@@ -18,7 +18,7 @@ export const AboutCard = ({
   viewerIdentity,
   bio,
   followedByCount,
-  isVerified, // Деструктуризация нового свойства
+  isVerified = false, // Значение по умолчанию
 }: AboutCardProps) => {
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
